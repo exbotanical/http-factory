@@ -1,7 +1,7 @@
 # TODOs
 - [ ] typechecks
-- [ ] ci/cd
-  - [ ] npm config
-  - [ ] build config
-  - [ ] lint config
-  - [ ] unit tests
+- [x] ci/cd
+  - [x] npm config
+  - [x] build config
+  - [x] lint config
+  - [x] unit tests

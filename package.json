@@ -2,18 +2,18 @@
   "name": "http-factory",
   "version": "1.0.0",
   "description": "A factory wrapper for Axios http clients",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
+  "type": "module",
   "files": [
-    "lib/"
+    "dist/"
   ],
   "scripts": {
-    "clean": "npm run mock:reset && rimraf coverage",
+    "clean": "npm run mock:reset && rimraf ./coverage",
     "lint": "eslint ./ --no-fix",
     "lint:fix": "eslint ./ --fix",
     "test": "npm run mock:db && jest  && npm run clean",
     "test:mon": "npm run mock:db && jest --watch _tests_.* && npm run clean",
-    "prebuild": "rimraf ./lib",
-    "build": "babel ./src -d ./lib",
+    "prebuild": "rimraf ./dist",
     "mock:db": "json-server mock/db.json &",
     "mock:reset": "chmod -R u+x ./scripts && ./scripts/setup_db.sh",
     "prerelease": "npm pack && tar -xvzf *.tgz && rimraf package *.tgz"
@@ -57,17 +57,12 @@
     ]
   },
   "dependencies": {
-    "axios": "0.21.1",
-    "http-factory": "file:hello/http-factory-1.0.0.tgz"
+    "axios": "0.21.1"
   },
   "devDependencies": {
-    "@babel/cli": "7.13.0",
-    "@babel/plugin-proposal-class-properties": "7.13.0",
-    "@babel/preset-env": "7.13.8",
     "@commitlint/cli": "12.0.1",
     "@commitlint/config-conventional": "12.0.1",
     "babel-eslint": "10.1.0",
-    "babel-preset-minify": "0.5.1",
     "eslint": "7.21.0",
     "husky": "4.3.8",
     "jest": "26.6.3",
