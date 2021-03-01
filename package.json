@@ -7,11 +7,36 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint ./ --no-fix",
+    "lint:fix": "eslint ./ --fix"
   },
   "author": "Matthew Zito <matthewtzito@gmail.com> (goldmund)",
   "license": "MIT",
+  "lint-staged": {
+    "src/**/*.{js}": [
+      "npm run lint"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
   "dependencies": {
     "axios": "0.21.1"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "12.0.1",
+    "@commitlint/config-conventional": "12.0.1",
+    "babel-eslint": "10.1.0",
+    "eslint": "7.21.0",
+    "husky": "4.3.8",
+    "lint-staged": "10.5.4"
   }
 }
