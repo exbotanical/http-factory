@@ -1,6 +1,5 @@
-const { expect } = require("@jest/globals");
-const HttpClient = require('../lib');
-const { defaultOpts } = require('../lib/defaults');
+import HttpClient from '../lib';
+import { defaultOpts } from '../lib/defaults';
 
 // not testing axios here - that's covered by axios; let's just make sure the lib's api is working as expected
 

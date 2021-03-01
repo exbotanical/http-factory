@@ -11,8 +11,8 @@
     "clean": "npm run mock:reset && rimraf ./coverage",
     "lint": "eslint ./ --no-fix",
     "lint:fix": "eslint ./ --fix",
-    "test": "npm run mock:db && jest  && npm run clean",
-    "test:mon": "npm run mock:db && jest --watch _tests_.* && npm run clean",
+    "test": "npm run mock:db && NODE_OPTIONS='--experimental-vm-modules' jest && npm run clean",
+    "test:mon": "npm run mock:db && NODE_OPTIONS='--experimental-vm-modules' jest --watch _tests_.* && npm run clean",
     "prebuild": "rimraf ./dist",
     "mock:db": "json-server mock/db.json &",
     "mock:reset": "chmod -R u+x ./scripts && ./scripts/setup_db.sh",
@@ -21,6 +21,8 @@
   "author": "Matthew Zito <matthewtzito@gmail.com> (goldmund)",
   "license": "MIT",
   "jest": {
+    "testEnvironment": "jest-environment-node",
+    "transform": {},
     "setupFilesAfterEnv": [
       "./__tests__/setup.js"
     ],
