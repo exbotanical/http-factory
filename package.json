@@ -3,17 +3,20 @@
   "version": "1.0.0",
   "description": "A factory wrapper for Axios http clients",
   "main": "lib/index.js",
-  "directories": {
-    "lib": "lib"
-  },
+  "files": [
+    "lib/"
+  ],
   "scripts": {
     "clean": "npm run mock:reset && rimraf coverage",
     "lint": "eslint ./ --no-fix",
     "lint:fix": "eslint ./ --fix",
     "test": "npm run mock:db && jest  && npm run clean",
     "test:mon": "npm run mock:db && jest --watch _tests_.* && npm run clean",
+    "prebuild": "rimraf ./lib",
+    "build": "babel ./src -d ./lib",
     "mock:db": "json-server mock/db.json &",
-    "mock:reset": "chmod -R u+x ./scripts && ./scripts/setup_db.sh"
+    "mock:reset": "chmod -R u+x ./scripts && ./scripts/setup_db.sh",
+    "prerelease": "npm pack && tar -xvzf *.tgz && rimraf package *.tgz"
   },
   "author": "Matthew Zito <matthewtzito@gmail.com> (goldmund)",
   "license": "MIT",
@@ -38,7 +41,8 @@
   },
   "lint-staged": {
     "lib/**/*.js": [
-      "npm run lint"
+      "npm run lint",
+      "npm run test"
     ]
   },
   "husky": {
@@ -53,12 +57,17 @@
     ]
   },
   "dependencies": {
-    "axios": "0.21.1"
+    "axios": "0.21.1",
+    "http-factory": "file:hello/http-factory-1.0.0.tgz"
   },
   "devDependencies": {
+    "@babel/cli": "7.13.0",
+    "@babel/plugin-proposal-class-properties": "7.13.0",
+    "@babel/preset-env": "7.13.8",
     "@commitlint/cli": "12.0.1",
     "@commitlint/config-conventional": "12.0.1",
     "babel-eslint": "10.1.0",
+    "babel-preset-minify": "0.5.1",
     "eslint": "7.21.0",
     "husky": "4.3.8",
     "jest": "26.6.3",
