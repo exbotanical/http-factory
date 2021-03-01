@@ -1,0 +1,17 @@
+{
+  "name": "http-factory",
+  "version": "1.0.0",
+  "description": "A factory wrapper for Axios http clients",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Matthew Zito <matthewtzito@gmail.com> (goldmund)",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "0.21.1"
+  }
+}
