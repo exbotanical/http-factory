@@ -1,0 +1,32 @@
+{
+  "people": [
+    {
+      "name": "La Monte Young",
+      "id": "0"
+    },
+    {
+      "name": "John Cale",
+      "id": "1"
+    },
+    {
+      "name": "Lou Reed",
+      "id": "2"
+    },
+    {
+      "name": "Walter De Maria",
+      "id": "3"
+    },
+    {
+      "name": "Bjork",
+      "id": "4"
+    },
+    {
+      "name": "Matthew Barney",
+      "id": "5"
+    },
+    {
+      "name": "Chris Burden",
+      "id": "6"
+    }
+  ]
+}
