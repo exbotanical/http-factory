@@ -8,7 +8,7 @@
     "dist/"
   ],
   "scripts": {
-    "clean": "npm run mock:reset && rimraf ./coverage",
+    "clean": "npm run mock:reset",
     "lint": "eslint ./ --no-fix",
     "lint:fix": "eslint ./ --fix",
     "test": "npm run mock:db && NODE_OPTIONS='--experimental-vm-modules' jest && npm run clean",
