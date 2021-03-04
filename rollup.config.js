@@ -1,5 +1,7 @@
 import babel from 'rollup-plugin-babel';
-import resolve from 'rollup-plugin-node-resolve';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import commonjs from 'rollup-plugin-commonjs';
+import rollupJson from 'rollup-plugin-json';
 import { terser } from 'rollup-plugin-terser';
 
 import pkg from './package.json';
@@ -13,7 +15,9 @@ export default [
       format: 'cjs'
     },
     plugins: [
-      resolve(),
+      nodeResolve(), // { jsnext: true, preferBuiltins: true, browser: true }
+      rollupJson(), // axios workaround
+      commonjs(), // ensure dependencies are commonjs *prior* to transpilation
       babel({
         exclude: 'node_modules/**',
         babelrc: false, // override browserslistrc
@@ -39,7 +43,9 @@ export default [
       name: 'HttpClient'
     },
     plugins: [
-      resolve(),
+      nodeResolve({ browser: true }),
+      rollupJson(),
+      commonjs(),
       babel({
         exclude: 'node_modules/**'
       })
@@ -54,7 +60,9 @@ export default [
       name: 'HttpClient'
     },
     plugins: [
-      resolve(),
+      nodeResolve({ browser: true }),
+      rollupJson(),
+      commonjs(),
       babel({
         exclude: 'node_modules/**'
       }),
@@ -69,7 +77,9 @@ export default [
       format: 'es'
     },
     plugins: [
-      resolve(),
+      nodeResolve(),
+      rollupJson(),
+      commonjs(),
       babel({
         exclude: 'node_modules/**'
       })
