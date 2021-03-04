@@ -2,3 +2,10 @@
 rollup.config.js
 lib
 package-lock.json
+__tests__
+mock
+scripts
+.editorconfig
+.eslintrc
+TODO.md
+.babelrc

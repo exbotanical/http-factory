@@ -15,7 +15,7 @@
   "scripts": {
     "build": "rollup -c",
     "prepublishOnly": "npm run prebuild && npm run build",
-    "clean": "npm run mock:reset",
+    "clean": "npm run mock:reset && rimraf ./coverage && npm run prebuild",
     "lint": "eslint 'lib/**/*.js' --no-fix",
     "lint:fix": "eslint 'lib/**/*.js' --fix",
     "test": "npm run mock:db && NODE_OPTIONS='--experimental-vm-modules' jest && npm run clean",
@@ -37,7 +37,7 @@
     "coverageDirectory": "./coverage",
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "src/**/*.js"
+      "lib/**/*.js"
     ],
     "coverageThreshold": {
       "global": {
