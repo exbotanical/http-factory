@@ -9,8 +9,8 @@
   ],
   "scripts": {
     "clean": "npm run mock:reset",
-    "lint": "eslint ./ --no-fix",
-    "lint:fix": "eslint ./ --fix",
+    "lint": "eslint 'lib/**/*.js' --no-fix",
+    "lint:fix": "eslint 'lib/**/*.js' --fix",
     "test": "npm run mock:db && NODE_OPTIONS='--experimental-vm-modules' jest && npm run clean",
     "test:mon": "npm run mock:db && NODE_OPTIONS='--experimental-vm-modules' jest --watch _tests_.* && npm run clean",
     "prebuild": "rimraf ./dist",
