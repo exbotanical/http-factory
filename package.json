@@ -2,13 +2,16 @@
   "name": "http-factory",
   "version": "1.0.0",
   "description": "A factory wrapper for Axios http clients",
-  "main": "dist/http-factory.cjs.js",
-  "browser": "dist/http-factory.umd.js",
-  "module": "dist/http-factory.es.js",
+  "main": "./dist/http-factory.cjs.js",
+  "browser": "./dist/http-factory.umd.js",
+  "module": "./dist/http-factory.es.js",
+  "exports": {
+    "require": "./dist/http-factory.cjs.js",
+    "import": "./dist/http-factory.es.js"
+  },
   "engines": {
     "node": ">= 10"
   },
-  "type": "module",
   "files": [
     "dist/"
   ],
@@ -28,6 +31,9 @@
   "author": "Matthew Zito <matthewtzito@gmail.com> (goldmund)",
   "license": "MIT",
   "jest": {
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    },
     "testEnvironment": "jest-environment-node",
     "transform": {},
     "setupFilesAfterEnv": [
@@ -80,6 +86,7 @@
     "@rollup/plugin-json": "4.1.0",
     "@rollup/plugin-node-resolve": "11.2.0",
     "babel-eslint": "10.1.0",
+    "babel-jest": "26.6.3",
     "eslint": "7.21.0",
     "husky": "4.3.8",
     "jest": "26.6.3",
