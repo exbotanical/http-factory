@@ -14,7 +14,8 @@ export default [
     input: 'lib/index.js',
     output: {
       file: pkg.main,
-      format: 'cjs'
+      format: 'cjs',
+      exports: 'default'
     },
     plugins: [
       nodeResolve(),

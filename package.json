@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "description": "A factory wrapper for Axios http clients",
   "main": "./dist/http-factory.cjs.js",
-  "browser": "./dist/http-factory.umd.js",
+  "browser": "./dist/http-factory.umd.min.js",
   "module": "./dist/http-factory.es.js",
-  "type": "module",
   "exports": {
     "require": "./dist/http-factory.cjs.js",
     "import": "./dist/http-factory.es.js"
