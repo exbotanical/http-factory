@@ -35,7 +35,6 @@
       "^.+\\.js$": "babel-jest"
     },
     "testEnvironment": "jest-environment-node",
-    "transform": {},
     "setupFilesAfterEnv": [
       "./__tests__/setup.js"
     ],
