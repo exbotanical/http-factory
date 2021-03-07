@@ -1,7 +1,7 @@
 {
   "name": "http-factory",
-  "version": "1.0.0",
-  "description": "A factory wrapper for Axios http clients",
+  "version": "0.0.0-development",
+  "description": "A declarative way to instantiate http interfaces and make iterable requests",
   "main": "./dist/http-factory.cjs.js",
   "browser": "./dist/http-factory.umd.min.js",
   "module": "./dist/http-factory.es.js",
@@ -26,7 +26,8 @@
     "prebuild": "rimraf ./dist",
     "mock:db": "json-server mock/db.json &",
     "mock:reset": "chmod -R u+x ./scripts && ./scripts/setup_db.sh",
-    "prerelease": "npm pack && tar -xvzf *.tgz && rimraf package *.tgz"
+    "prerelease": "npm pack && tar -xvzf *.tgz && rimraf package *.tgz",
+    "semantic-release": "semantic-release"
   },
   "author": "Matthew Zito <matthewtzito@gmail.com> (goldmund)",
   "license": "MIT",
@@ -86,6 +87,7 @@
     "babel-eslint": "10.1.0",
     "babel-jest": "26.6.3",
     "core-js": "3.9.1",
+    "cz-conventional-changelog": "3.3.0",
     "eslint": "7.21.0",
     "husky": "4.3.8",
     "jest": "26.6.3",
@@ -93,6 +95,16 @@
     "lint-staged": "10.5.4",
     "rimraf": "3.0.2",
     "rollup": "2.40.0",
-    "rollup-plugin-terser": "7.0.2"
+    "rollup-plugin-terser": "7.0.2",
+    "semantic-release": "^17.4.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MatthewZito/http-factory.git"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
