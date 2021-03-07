@@ -51,7 +51,8 @@ export default [
       babel({
         exclude: 'node_modules/**',
         babelrc: false,
-        ...babelrc
+        ...babelrc,
+        babelHelpers: 'runtime'
       })
     ]
   },
@@ -70,7 +71,8 @@ export default [
       babel({
         exclude: 'node_modules/**',
         babelrc: false,
-        ...babelrc
+        ...babelrc,
+        babelHelpers: 'runtime'
       }),
       terser()
     ]
@@ -89,7 +91,8 @@ export default [
       babel({
         exclude: 'node_modules/**',
         babelrc: false,
-        ...babelrc
+        ...babelrc,
+        babelHelpers: 'runtime'
       })
     ]
   }

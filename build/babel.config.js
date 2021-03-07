@@ -1,15 +1,16 @@
 export default {
   'presets': [
     [
-      '@babel/env',
+      '@babel/preset-env',
       {
-        'modules': false // rollup conf will handle this
+        useBuiltIns: false,
+        modules: false // rollup conf will handle this
       }
     ]
   ],
   'plugins': [
     ['@babel/plugin-transform-runtime', {
-      'regenerator': true
+      regenerator: true
     }]
   ]
 }

@@ -5,6 +5,7 @@
   "main": "./dist/http-factory.cjs.js",
   "browser": "./dist/http-factory.umd.js",
   "module": "./dist/http-factory.es.js",
+  "type": "module",
   "exports": {
     "require": "./dist/http-factory.cjs.js",
     "import": "./dist/http-factory.es.js"
@@ -75,7 +76,6 @@
   },
   "devDependencies": {
     "@babel/core": "7.13.8",
-    "@babel/plugin-external-helpers": "7.12.13",
     "@babel/plugin-transform-runtime": "7.13.9",
     "@babel/preset-env": "7.13.9",
     "@commitlint/cli": "12.0.1",
@@ -86,6 +86,7 @@
     "@rollup/plugin-node-resolve": "11.2.0",
     "babel-eslint": "10.1.0",
     "babel-jest": "26.6.3",
+    "core-js": "3.9.1",
     "eslint": "7.21.0",
     "husky": "4.3.8",
     "jest": "26.6.3",
