@@ -1,6 +1,10 @@
 ## http-factory | A Declarative Http Interface Factory
 A declarative way to instantiate http interfaces and make iterable requests.
 
+[![Build Status](https://travis-ci.org/MatthewZito/http-factory.svg?branch=master)](https://travis-ci.org/MatthewZito/http-factory)
+[![npm version](https://badge.fury.io/js/http-factory.svg)](https://badge.fury.io/js/http-factory)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ```
 var client = new HttpClient({ ...options })
   .transforms({
