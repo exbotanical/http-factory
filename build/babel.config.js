@@ -1,5 +1,5 @@
 export default {
-  'presets': [
+  presets: [
     [
       '@babel/preset-env',
       {
@@ -8,9 +8,10 @@ export default {
       }
     ]
   ],
-  'plugins': [
+  plugins: [
     ['@babel/plugin-transform-runtime', {
       regenerator: true
     }]
-  ]
+  ],
+  comments: false
 }

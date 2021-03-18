@@ -61,7 +61,7 @@ export default [
     /* Minified UMD */
     input: 'lib/index.js',
     output: {
-      file: pkg.browser.replace(/\.js$/, '.min.js'),
+      file: pkg.browser.replace(/\.js$/, '.js'),
       format: 'umd',
       name: 'HttpClient'
     },
