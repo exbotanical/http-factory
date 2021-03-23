@@ -19,6 +19,7 @@
     "build": "rollup -c",
     "prepublishOnly": "npm run prebuild && npm run build",
     "clean": "npm run mock:reset && rimraf ./coverage && npm run prebuild",
+    "coveralls": "NODE_OPTIONS='--experimental-vm-modules' jest --coverage && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
     "lint": "eslint 'lib/**/*.js' --no-fix",
     "lint:fix": "eslint 'lib/**/*.js' --fix",
     "test": "npm run mock:db && NODE_OPTIONS='--experimental-vm-modules' jest && npm run clean",
@@ -44,6 +45,10 @@
     "collectCoverage": true,
     "collectCoverageFrom": [
       "lib/**/*.js"
+    ],
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/lib/base.js",
+      "<rootDir>/lib/defaults.js"
     ],
     "coverageThreshold": {
       "global": {
@@ -85,6 +90,7 @@
     "babel-eslint": "10.1.0",
     "babel-jest": "26.6.3",
     "core-js": "3.9.1",
+    "coveralls": "3.1.0",
     "cz-conventional-changelog": "3.3.0",
     "eslint": "7.21.0",
     "husky": "4.3.8",
