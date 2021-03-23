@@ -2,6 +2,11 @@
 
 ## A Declarative Http Interface Factory
 
+[![Build Status](https://travis-ci.org/MatthewZito/http-factory.svg?branch=master)](https://travis-ci.org/MatthewZito/http-factory)
+[![npm version](https://badge.fury.io/js/http-factory.svg)](https://badge.fury.io/js/http-factory)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+
 `http-factory` is an NPM library and Axios-wrapper that offers a declarative way to instantiate http interfaces and make iterable (serial async) requests.
 
 ```js
@@ -16,10 +21,6 @@ See the API docs below for instantiating clients, dev logging, and making iterab
 
 For client options see [Axios docs](https://github.com/axios/axios).
 
-[![Build Status](https://travis-ci.org/MatthewZito/http-factory.svg?branch=master)](https://travis-ci.org/MatthewZito/http-factory)
-[![npm version](https://badge.fury.io/js/http-factory.svg)](https://badge.fury.io/js/http-factory)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
 ## Table of Contents
 
 - [Supported Environments](#builds) 
@@ -29,7 +30,7 @@ For client options see [Axios docs](https://github.com/axios/axios).
     - [setBaseUrl](#setbaseurl)
     - [intercepts](#intercept)
     - [transforms](#transform)
-    - [logs](#logs)
+    - [logs](#log)
   - [Iterable Requests](#serial)
   - [Continuation Passing + Callbacks](#cps)
 
@@ -167,13 +168,14 @@ async function fetchAll () {
     // [ { data: 1 } ]
     // [ { data: 1 }, { data: 2 } ]
     // [ { data: 1 }, { data: 2 }, { data: 3 } ]
+    ...
   }
 }
 ```
 
 ### <a name="cps"></a> Continuations / Callbacks
 
-Each request method accepts an optional callback to which the response or error will be piped. This affords the use of continuation-passing, or nodejs-style callbacks:
+Each request method accepts an optional callback to which the response or error will be piped. This affords the use of continuation-passing using callbacks:
 
 **Example**
 
