@@ -17,14 +17,16 @@
   ],
   "scripts": {
     "build": "rollup -c",
-    "prepublishOnly": "npm run prebuild && npm run build",
     "clean": "npm run mock:reset && rimraf ./coverage && npm run prebuild",
     "coveralls": "NODE_OPTIONS='--experimental-vm-modules' jest --coverage && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
+    "flags": "cross-env NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1",
     "lint": "eslint 'lib/**/*.js' --no-fix",
     "lint:fix": "eslint 'lib/**/*.js' --fix",
-    "test": "npm run mock:db && NODE_OPTIONS='--experimental-vm-modules' jest && npm run clean",
-    "test:mon": "npm run mock:db && NODE_OPTIONS='--experimental-vm-modules' jest --watch _tests_.* && npm run clean",
+    "test": "npm run flags && jest && npm run clean",
+    "test:mon": "npm run flags && jest --watch _tests_.* && npm run clean",
+    "test:local": "npm run mock:db && npm run flags && cross-env NODE_TEST_MODE=1  jest && npm run clean",
     "prebuild": "rimraf ./dist",
+    "prepublishOnly": "npm run prebuild && npm run build",
     "mock:db": "json-server mock/db.json &",
     "mock:reset": "chmod -R u+x ./scripts && ./scripts/setup_db.sh",
     "prerelease": "npm pack && tar -xvzf *.tgz && rimraf package *.tgz",
@@ -48,7 +50,8 @@
     ],
     "coveragePathIgnorePatterns": [
       "<rootDir>/lib/base.js",
-      "<rootDir>/lib/defaults.js"
+      "<rootDir>/lib/defaults.js",
+      "<rootDir>/lib/utils/"
     ],
     "coverageThreshold": {
       "global": {
@@ -89,12 +92,15 @@
     "axios": "0.21.1",
     "babel-eslint": "10.1.0",
     "babel-jest": "26.6.3",
+    "babel-plugin-transform-class-properties": "6.24.1",
     "core-js": "3.9.1",
     "coveralls": "3.1.0",
+    "cross-env": "7.0.3",
     "cz-conventional-changelog": "3.3.0",
     "eslint": "7.21.0",
     "husky": "4.3.8",
     "jest": "26.6.3",
+    "js-heuristics": "1.0.0",
     "json-server": "0.16.3",
     "lint-staged": "10.5.4",
     "rimraf": "3.0.2",

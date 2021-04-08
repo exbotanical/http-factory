@@ -2,17 +2,20 @@ import HttpClient from '../lib';
 import { defaultOpts } from '../lib/defaults';
 
 // not testing axios here - that's covered by axios; let's just make sure the lib's api is working as expected
+const isLocalMode = process.env.NODE_TEST_MODE;
 
 describe('Evaluation of default configurations', () => {
   it('sets explicitly designated headers', () => {});
 
   it('sets an explicitly designated base URL', async () => {
-    client.setBaseUrl('https://jsonplaceholder.typicode.com/');
-    // client.setBaseUrl('http://127.0.0.1:3000/'); // use local mock
+    client.setBaseUrl(
+      isLocalMode
+        ? 'http://127.0.0.1:3000/' 
+        :'https://jsonplaceholder.typicode.com/'
+    );
     
     const response = await client.get({
-      url: '/users/1'
-      // url: 'people/1'  // use local mock
+      url: isLocalMode ? 'people/1' : '/users/1'
     });
 
     expect(response.status).toBe(200);
@@ -31,32 +34,53 @@ describe('Evaluation of default configurations', () => {
   });
 
   it('falls back to the default options when constructor passed nothing', () => {
-    expect(internal.defaults.headers['Content-Type']).toEqual(defaultOpts.headers['Content-Type']);
+    expect(internal.defaults.headers['Content-Type'])
+      .toEqual(defaultOpts.headers['Content-Type']);
   });
 });
 
-// describe('Transformers assessment', () => {
-//   describe('Evaluation of request transformers', () => {
-//     it('sets a request transformer', () => {});
-//     it('throws an error when passed an object other than a function or array thereof', () => {});
+describe('Evaluation of continuation passing style support', () => {
+  it('invokes response callbacks', async () => {
+    client.setBaseUrl(
+      isLocalMode
+        ? 'http://127.0.0.1:3000/' 
+        :'https://jsonplaceholder.typicode.com/'
+    );
 
-//   });
+    await client.get({
+      url: isLocalMode ? 'people/1' : '/users/1'
+    }, ({ status }) => {
+      expect(status).toBe(200);
+    });
+  });
 
-//   describe('Evaluation of response transformers', () => {
-//     it('sets a response transformer', () => {});
-//     it('throws an error when passed an object other than a function or array thereof', () => {});
-//   });
-// });
+  it('invokes error callbacks', async () => {
+    client.setBaseUrl('');
 
-// describe('Logger assessment', () => {
-//   describe('Evaluation of loggers', () => {
-//     it('toggle the request and response loggers', () => {});
-//   });
+    await client.get({
+      url: ''
+    }, ({ message }) => {
+      expect(message).not.toBeUndefined();
+    });
+  });
 
-//   describe('Evaluation of request logger', () => {
-//     it('toggle the request logger', () => {});
-//   });
+  it('throws a contract violation if not provided a function', async () => {
+    client.setBaseUrl('https://jsonplaceholder.typicode.com/');
+    expect(() => client.get({ url: 'users/1' }, '')).toThrow();
+    expect(() => client.post({ url: 'users/1' }, '')).toThrow();
+    expect(() => client.put({ url: 'users/1' }, '')).toThrow();
+    expect(() => client.delete({ url: 'users/1' }, '')).toThrow();
+  });
+});
 
-//   describe('Evaluation of response transformers', () => {
-//     it('toggle the response logger', () => {});
-//   });
+if (process.env.NODE_TEST_MODE) {
+  describe('Evaluation of method wrapping', () => {
+    it('should wrap internal CRUD methods', async () => {
+      client.setBaseUrl('https://jsonplaceholder.typicode.com/');
+      
+      const unresolved = client.get({ url: 'users/1' });
+      expect(unresolved).toBeInstanceOf(Promise);
+      expect(await unresolved).not.toBeUndefined();
+    });
+  });
+}

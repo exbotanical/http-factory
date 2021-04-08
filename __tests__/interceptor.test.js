@@ -1,10 +1,10 @@
 import HttpClient from '../lib';
 
-const url = 'https://jsonplaceholder.typicode.com/todos/1';
-// const url = 'http://127.0.0.1:3000/people/1'; // use local mock
+const url = process.env.NODE_TEST_MODE 
+  ? 'http://127.0.0.1:3000/people/1'
+  : 'https://jsonplaceholder.typicode.com/todos/1';
 
 describe('Evaluation of request interceptors', () => {
-  //   it('sets an request interceptor', () => {});
   it('throws an error when passed an object other than a function', () => {
     expect(() => {
       new HttpClient()

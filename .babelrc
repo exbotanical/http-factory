@@ -6,5 +6,6 @@
     ["@babel/plugin-transform-runtime", {
       "regenerator": true
     }]
-  ]
+  ],
+  "comments": false
 }

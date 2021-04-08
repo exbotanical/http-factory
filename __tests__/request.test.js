@@ -1,5 +1,8 @@
-const url = 'https://jsonplaceholder.typicode.com/todos/1';
-// const url = 'http://127.0.0.1:3000/people/1'; // use local mock
+const isLocalMode = process.env.NODE_TEST_MODE;
+
+const url = isLocalMode
+  ? 'http://127.0.0.1:3000/people/1'
+  : 'https://jsonplaceholder.typicode.com/todos/1';
 
 describe('Evaluation of response cycles', () => {
   it('returns 2xx response objects via the provided callback', () => {
@@ -39,19 +42,18 @@ describe('Evaluation of required argument types', () => {
   });
 });
 
-
-// describe('Evaluation of request method configurations', () => {
-//   it('should pass data', async () => {
-//     const response = await client.post({ 
-//       url: 'http://127.0.0.1:3000/people',
-//       data: {
-//         "name": "Egon Schiele",
-//         "id": "7"
-//       }
-//     });
-
-//     expect(response.status).toBe(201);
-//   });
-
-//   it('should pass headers, overriding defaults', () => {});
-// });
+if (isLocalMode) {
+  describe('Evaluation of request method configurations', () => {
+    it('should pass data', async () => {
+      const response = await client.post({ 
+        url: 'http://127.0.0.1:3000/people',
+        data: {
+          "name": "Egon Schiele",
+          "id": "7"
+        }
+      });
+  
+      expect(response.status).toBe(201);
+    });
+  });
+}

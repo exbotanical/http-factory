@@ -33,7 +33,8 @@ export default [
               targets: 'maintained node versions'
             }
           ]
-        ]
+        ],
+        comments: false
       })
     ]
   },

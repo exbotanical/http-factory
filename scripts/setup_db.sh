@@ -6,7 +6,11 @@ DB_FILE="mock/db.json"
 DB_PORT=3000
 E_FILENOTFOUND=2
 
-kill $(lsof -n -i :$DB_PORT | grep LISTEN | awk '{ print $2 }') 2>/dev/null
+INSTANCE=$(lsof -n -i :$DB_PORT | grep LISTEN | awk '{ print $2 }')
+
+[[ -z $INSTANCE ]] && exit 0
+
+kill $INSTANCE 2>/dev/null
 
 if [[ -e $DB_FILE ]]; then
   cat > $DB_FILE <<END

@@ -1,4 +1,4 @@
-# http-factory 
+# http-factory
 
 ## A Declarative Http Interface Factory
 
@@ -10,10 +10,10 @@
 `http-factory` is an NPM library and Axios-wrapper that offers a declarative way to instantiate http interfaces and make iterable (serial async) requests.
 
 ```js
-var data = [];
+const data = [];
 
-for await (var rs of client.serialGet(urls)) {
-  if (rs.status === 200) data.push({ data: response.data });
+for await (const rs of client.serialGet(urls)) {
+  if (rs.status === 200) data.push({ data: rs.data });
 ...
 ```
 
@@ -23,7 +23,7 @@ For client options see [Axios docs](https://github.com/axios/axios).
 
 ## Table of Contents
 
-- [Supported Environments](#builds) 
+- [Supported Environments](#builds)
 - [Installation + Usage](#usage)
 - [Documentation / API](#docs)
   - [Core API](#api)
@@ -47,7 +47,7 @@ npm install http-factory
 yarn add http-factory
 ```
 
-Commonjs: 
+Commonjs:
 
 ```js
 const httpClient = require('http-factory');
@@ -147,11 +147,15 @@ const client = new HttpClient({ ...options })
 
 ### <a name="serial"></a> Iterable Requests
 
-#### serialGet(config: object[], cb: Function) 
+Iterable requests allow the execution of *n* HTTP requests serially. Note these methods have fail-fast behaviors - much akin to `Promise.all`, if one of the requests fails, the chain stops. It is recommended to either use `try...catch` blocks around these iterations, or `client.intercepts({ ... })` to process erroneous responses.
+
+In order to bypass fail-fast behavior and lazily collect all erroneous responses, use continuation-passing style by [passing a callback](#cps). Errors will be instances of the Error constructor whereas Http requests with a 4xx status will be regular objects.
+
+#### serialGet(config: object[], cb: Function)
 
 *execute an iterable request, awaiting each result in sequence*
 
-Pass an array of objects (each a GET config) and iterate over the results as they resolve.
+Pass an array of objects (each a GET config) and iterate over the results as they resolve (or reject).
 
 **Example**
 
@@ -159,17 +163,112 @@ Pass an array of objects (each a GET config) and iterate over the results as the
 const client = new HttpClient({ ...options });
 
 
-var results = [];
-var urls : [{ url: '/users/1' }, { url: '/users/2' }, {  url: '/users/3' }];
+const results = [];
+const urls : [{ url: '/users/1' }, { url: '/users/2' }, {  url: '/users/3' }];
 
 async function fetchAll () {
-  for await (var response of client.serialGet(urls)) {
-    if (response.status === 200) results.push({ data: response.data.id });
-    // [ { data: 1 } ]
-    // [ { data: 1 }, { data: 2 } ]
-    // [ { data: 1 }, { data: 2 }, { data: 3 } ]
+  for await (const response of client.serialGet(urls)) {
+    try {
+      if (response.status === 200) results.push({ data: response.data.id });
+      // [ { data: 1 } ]
+      // [ { data: 1 }, { data: 2 } ]
+      // [ { data: 1 }, { data: 2 }, { data: 3 } ]
+      ...
+  }
+}
+```
+
+#### serialPost(config: object[], cb: Function)
+
+*execute an iterable request, awaiting each result in sequence*
+
+Pass an array of objects (each a POST config) and iterate over the results as they resolve (or reject).
+
+**Example**
+
+```js
+...
+async function postAll () {
+  for await (const { status } of client.serialPost(configs)) {
+    try {
+      if (status === 201) results.push({ ok: true });
+      // [ { ok: true } ]
+      // [ { ok: true }, { ok: true  } ]
+      // [ { ok: true }, { ok: true  }, { ok: true } ]
+    } catch (ex) {
+      results.push({ ok: false });
+    }
     ...
   }
+  ...
+}
+```
+
+#### serialPut(config: object[], cb: Function)
+
+*execute an iterable request, awaiting each result in sequence*
+
+Pass an array of objects (each a PUT config) and iterate over the results as they resolve (or reject).
+
+**Example**
+
+```js
+const client = new HttpClient({ ...options });
+
+
+const results = [];
+
+const configs = [{
+    url: 'http://database/people/6',
+    data: { name: 'Egon Schiele' }
+  },
+  {
+    url: 'http://database/people/5',
+    data: { name: 'Ludwig Wittgenstein' }
+  },
+  { ... }
+];
+
+async function putAll () {
+  for await (const { status } of client.serialPut(configs)) {
+    try {
+      if (status === 204) results.push({ ok: true });
+      // [ { ok: true } ]
+      // [ { ok: true }, { ok: true  } ]
+      // [ { ok: true }, { ok: true  }, { ok: true } ]
+    } catch (ex) {
+      results.push({ ok: false });
+    }
+    ...
+  }
+  ...
+  const success = results.reduce((acc, { ok }) => acc = !!ok && true);
+}
+```
+
+#### serialDelete(config: object[], cb: Function)
+
+*execute an iterable request, awaiting each result in sequence*
+
+Pass an array of objects (each a DELETE config) and iterate over the results as they resolve (or reject).
+
+**Example**
+
+```js
+...
+async function deleteAll () {
+  for await (const { status } of client.serialDelete(configs)) {
+    try {
+      if (status === 204) results.push({ ok: true });
+      // [ { ok: true } ]
+      // [ { ok: true }, { ok: true  } ]
+      // [ { ok: true }, { ok: true  }, { ok: true } ]
+    } catch (ex) {
+      results.push({ ok: false });
+    }
+    ...
+  }
+  ...
 }
 ```
 
@@ -180,11 +279,26 @@ Each request method accepts an optional callback to which the response or error 
 **Example**
 
 ```js
-
 async function getData () {
   await client.getTheData({ url }, ({ ok, data }) => {
     if (ok) this.data = data;
     else ...
   });
 }
+```
+
+Continuations can likewise be passed to serial requests:
+
+**Serial Request Example**
+
+```js
+...
+const callback = ({ data }) => results.push(data);
+
+async function fetchAll () {
+  try {
+    for await (const _ of client.serialGet(urls, callback));
+  } catch(ex) { ... }
+}
+...
 ```
