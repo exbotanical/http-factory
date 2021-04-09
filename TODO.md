@@ -6,6 +6,7 @@
   - [x] lint config
   - [x] unit tests
 - [x] auto-publishing
-- [ ] improve testing ci (i.e. remove need to reset mocks w/ a shell script)
-  - [ ] improve coverage, add coveralls to travis config
+- [x] improve testing ci (i.e. remove need to reset mocks w/ a shell script)
+  - [x] improve coverage, add coveralls to travis config
 - [x] full documentation
+- [ ] support for custom proxies
