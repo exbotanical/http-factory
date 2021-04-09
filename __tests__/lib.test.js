@@ -10,10 +10,10 @@ describe('Evaluation of default configurations', () => {
   it('sets an explicitly designated base URL', async () => {
     client.setBaseUrl(
       isLocalMode
-        ? 'http://127.0.0.1:3000/' 
+        ? 'http://127.0.0.1:3000/'
         :'https://jsonplaceholder.typicode.com/'
     );
-    
+
     const response = await client.get({
       url: isLocalMode ? 'people/1' : '/users/1'
     });
@@ -43,7 +43,7 @@ describe('Evaluation of continuation passing style support', () => {
   it('invokes response callbacks', async () => {
     client.setBaseUrl(
       isLocalMode
-        ? 'http://127.0.0.1:3000/' 
+        ? 'http://127.0.0.1:3000/'
         :'https://jsonplaceholder.typicode.com/'
     );
 
@@ -73,14 +73,13 @@ describe('Evaluation of continuation passing style support', () => {
   });
 });
 
-if (process.env.NODE_TEST_MODE) {
-  describe('Evaluation of method wrapping', () => {
-    it('should wrap internal CRUD methods', async () => {
-      client.setBaseUrl('https://jsonplaceholder.typicode.com/');
-      
-      const unresolved = client.get({ url: 'users/1' });
-      expect(unresolved).toBeInstanceOf(Promise);
-      expect(await unresolved).not.toBeUndefined();
-    });
+describe('Evaluation of method wrapping', () => {
+  it('should wrap internal CRUD methods', async () => {
+    client.setBaseUrl('https://jsonplaceholder.typicode.com/');
+
+    const unresolved = client.get({ url: 'users/1' });
+    expect(unresolved).toBeInstanceOf(Promise);
+    expect(await unresolved).not.toBeUndefined();
   });
-}
+});
+

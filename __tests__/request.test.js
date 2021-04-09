@@ -13,7 +13,7 @@ describe('Evaluation of response cycles', () => {
 
   it('returns 2xx response objects via assignment', async () => {
     const response = await client.get({ url });
-    
+
     expect(response.status).toBe(200);
   });
 
@@ -42,18 +42,19 @@ describe('Evaluation of required argument types', () => {
   });
 });
 
-if (isLocalMode) {
-  describe('Evaluation of request method configurations', () => {
-    it('should pass data', async () => {
-      const response = await client.post({ 
-        url: 'http://127.0.0.1:3000/people',
-        data: {
-          "name": "Egon Schiele",
-          "id": "7"
-        }
-      });
-  
-      expect(response.status).toBe(201);
+
+describe('Evaluation of request method configurations', () => {
+  it('should pass data', async () => {
+    const response = await client.post({
+      url: isLocalMode
+        ? 'http://127.0.0.1:3000/people'
+        : 'https://jsonplaceholder.typicode.com/posts',
+      data: {
+        "name": "Egon Schiele",
+        "id": "7"
+      }
     });
+
+    expect(response.status).toBe(201);
   });
-}
+});

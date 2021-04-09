@@ -61,16 +61,15 @@ import httpClient from 'http-factory';
 
 ## <a name="docs"></a> Documentation
 
-By default, the `withCredentials` property is set to false. Similarly, requests are - by default - sent with a Content-Type header of application/json. UTF-8 encoding is set by default, and all request bodies will be serialized.
+By default, requests are sent with a Content-Type header of application/json. UTF-8 encoding is set by default, and all request bodies will be serialized.
 
 To change this behavior, you can provide your own Axios options to the constructor:
 
 ```js
-
 const client = new HttpClient({ baseURL: 'https://some-domain.com/api/' });
 ```
 
-You can chain interceptors, transformers, and dev loggers onto the constructor invocation:
+You can chain interceptors, transformers, and dev loggers onto the client object:
 
 ```js
 const client = new HttpClient({ ...options })
