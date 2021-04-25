@@ -3,6 +3,7 @@ import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import rollupJson from '@rollup/plugin-json';
 import { terser } from 'rollup-plugin-terser';
+import nodePolyfills from 'rollup-plugin-polyfill-node';
 
 import babelrc from './build/babel.config'; // must import, as base babelrc is needed by jest
 
@@ -87,9 +88,10 @@ export default [
       format: 'es'
     },
     plugins: [
-      nodeResolve(),
+      nodeResolve({ browser: true }),
       rollupJson(),
       commonjs(),
+      nodePolyfills(),
       babel({
         exclude: 'node_modules/**',
         babelrc: false,
