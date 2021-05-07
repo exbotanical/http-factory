@@ -1,4 +1,4 @@
-import HttpClient from '../lib';
+import { HttpClient } from '../lib';
 import { clientKey } from '../lib/base';
 
 beforeAll(() => {

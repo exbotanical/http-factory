@@ -3,6 +3,7 @@
 ## A Declarative Http Interface Factory
 
 [![Build Status](https://travis-ci.org/MatthewZito/http-factory.svg?branch=master)](https://travis-ci.org/MatthewZito/http-factory)
+[![Coverage Status](https://coveralls.io/repos/github/MatthewZito/http-factory/badge.svg?branch=master)](https://coveralls.io/github/MatthewZito/http-factory?branch=master)
 [![npm version](https://badge.fury.io/js/http-factory.svg)](https://badge.fury.io/js/http-factory)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -50,13 +51,13 @@ yarn add http-factory
 Commonjs:
 
 ```js
-const httpClient = require('http-factory');
+const { httpClient } = require('http-factory');
 ```
 
 ESM:
 
 ```js
-import httpClient from 'http-factory';
+import { httpClient } from 'http-factory';
 ```
 
 ## <a name="docs"></a> Documentation

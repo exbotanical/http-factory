@@ -1,4 +1,4 @@
-import HttpClient from '../lib';
+import { HttpClient } from '../lib';
 
 const url = process.env.NODE_TEST_MODE
   ? 'http://127.0.0.1:3000/people/1'
