@@ -1,11 +1,6 @@
 {
   "presets": [
-    "@babel/preset-env"
-  ],
-  "plugins": [
-    ["@babel/plugin-transform-runtime", {
-      "regenerator": true
-    }]
-  ],
-  "comments": false
+    ["@babel/preset-env", { "targets": { "node": 10 } }],
+    "@babel/preset-typescript"
+  ]
 }

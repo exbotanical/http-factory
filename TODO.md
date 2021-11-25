@@ -1,12 +1,5 @@
 # TODOs
-- [x] typechecks
-- [x] ci/cd
-  - [x] npm config
-  - [x] build config
-  - [x] lint config
-  - [x] unit tests
-- [x] auto-publishing
-- [x] improve testing ci (i.e. remove need to reset mocks w/ a shell script)
-  - [x] improve coverage, add coveralls to travis config
-- [x] full documentation
-- [ ] support for custom proxies
+
+- [ ] Add shell script for test init, cleanup
+- [ ] Add workflows
+- [ ] Update workflows to use pnpm
