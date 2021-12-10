@@ -1,12 +1,12 @@
 export interface IBaseClientInstance {
+	<T = any>(config: IRequestConfig): Promise<T>;
+	<T = any>(url: string, config?: IRequestConfig): Promise<T>;
+
 	defaults: IDefaults;
 	interceptors: {
 		request: IInterceptorManager<IRequestConfig>;
 		response: IInterceptorManager<any>;
 	};
-
-	<T = any>(config: IRequestConfig): Promise<T>;
-	<T = any>(url: string, config?: IRequestConfig): Promise<T>;
 }
 
 export interface IDefaults<D = any> extends Omit<IRequestConfig<D>, 'headers'> {
@@ -51,34 +51,34 @@ interface IProxyConfig {
 }
 
 type Method =
-	| 'get'
-	| 'GET'
-	| 'delete'
 	| 'DELETE'
-	| 'head'
+	| 'delete'
+	| 'GET'
+	| 'get'
 	| 'HEAD'
-	| 'options'
-	| 'OPTIONS'
-	| 'post'
-	| 'POST'
-	| 'put'
-	| 'PUT'
-	| 'patch'
-	| 'PATCH'
-	| 'purge'
-	| 'PURGE'
-	| 'link'
+	| 'head'
 	| 'LINK'
-	| 'unlink'
-	| 'UNLINK';
+	| 'link'
+	| 'OPTIONS'
+	| 'options'
+	| 'PATCH'
+	| 'patch'
+	| 'POST'
+	| 'post'
+	| 'PURGE'
+	| 'purge'
+	| 'PUT'
+	| 'put'
+	| 'UNLINK'
+	| 'unlink';
 
 type ResponseType =
 	| 'arraybuffer'
 	| 'blob'
 	| 'document'
 	| 'json'
-	| 'text'
-	| 'stream';
+	| 'stream'
+	| 'text';
 
 interface TransitionalOptions {
 	silentJSONParsing?: boolean;
@@ -157,7 +157,7 @@ export interface IError<T = any, D = any> extends Error {
 	toJSON: () => object;
 }
 
-interface IPromise<T = any> extends Promise<IResponse<T>> {}
+type IPromise<T = any> = Promise<IResponse<T>>;
 
 interface CancelStatic {
 	new (message?: string): Cancel;
@@ -189,7 +189,7 @@ interface CancelTokenSource {
 
 interface IInterceptorManager<V> {
 	use<T = V>(
-		onFulfilled?: (value: V) => T | Promise<T>,
+		onFulfilled?: (value: V) => Promise<T> | T,
 		onRejected?: (error: any) => any
 	): number;
 	eject(id: number): void;
