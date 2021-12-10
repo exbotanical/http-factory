@@ -1,3 +1,4 @@
+/* eslint-disable jest/require-to-throw-message */
 import { HttpClient } from '../src';
 
 const url = 'http://127.0.0.1:3000/';
@@ -55,13 +56,16 @@ describe('continuation passing style support', () => {
 
 	it('throws a contract violation if not provided a function', async () => {
 		// @ts-expect-error
-		expect(() => client.get({ url: 'people/1' }, '')).toThrow();
+		await expect(client.get({ url: 'people/1' }, '')).rejects.toThrow();
+
 		// @ts-expect-error
-		expect(() => client.post({ url: 'people/1' }, '')).toThrow();
+		await expect(client.post({ url: 'people/1' }, '')).rejects.toThrow();
+
 		// @ts-expect-error
-		expect(() => client.put({ url: 'people/1' }, '')).toThrow();
+		await expect(client.put({ url: 'people/1' }, '')).rejects.toThrow();
+
 		// @ts-expect-error
-		expect(() => client.delete({ url: 'people/1' }, '')).toThrow();
+		await expect(client.delete({ url: 'people/1' }, '')).rejects.toThrow();
 	});
 });
 

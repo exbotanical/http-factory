@@ -1,71 +1,69 @@
 /* eslint-disable jest/no-conditional-expect */
 import { HttpClient } from '../src';
 
-describe('request/response', () => {
-	const url = 'http://127.0.0.1:3000/people/1';
+const url = 'http://127.0.0.1:3000/people/1';
 
-	describe('response cycles', () => {
-		it('returns 2xx response objects via the provided callback', () => {
-			const client = new HttpClient();
+describe('response cycles', () => {
+	it('returns 2xx response objects via the provided callback', () => {
+		const client = new HttpClient();
 
-			client.get<{ status: number }>({ url }, (response) => {
-				expect(response.status).toBe(200);
-			});
-		});
-
-		it('returns 2xx response objects via assignment', async () => {
-			const client = new HttpClient();
-
-			const response = await client.get({ url });
-
+		client.get<{ status: number }>({ url }, (response) => {
 			expect(response.status).toBe(200);
 		});
+	});
 
-		it('returns 4xx error objects via the provided callback', async () => {
-			const client = new HttpClient();
+	it('returns 2xx response objects via assignment', async () => {
+		const client = new HttpClient();
 
-			await client.get({ url: '' }, (response) => {
-				expect(response).toBeInstanceOf(Error);
-			});
-		});
+		const response = await client.get({ url });
 
-		it('returns 4xx error objects via assignment', async () => {
-			const client = new HttpClient();
+		expect(response.status).toBe(200);
+	});
 
-			try {
-				await client.get({ url: '' });
-			} catch (ex) {
-				expect(ex).toBeInstanceOf(Error);
-			}
+	it('returns 4xx error objects via the provided callback', async () => {
+		const client = new HttpClient();
+
+		await client.get({ url: '' }, (response) => {
+			expect(response).toBeInstanceOf(Error);
 		});
 	});
 
-	describe('required argument types', () => {
-		it('throws an error when passed a non-function callback', async () => {
-			const client = new HttpClient();
+	it('returns 4xx error objects via assignment', async () => {
+		const client = new HttpClient();
 
-			try {
-				// @ts-expect-error
-				await client.get({ url }, 'not_a_callback');
-			} catch (ex) {
-				expect(ex).toBeInstanceOf(Error);
+		try {
+			await client.get({ url: '' });
+		} catch (ex) {
+			expect(ex).toBeInstanceOf(Error);
+		}
+	});
+});
+
+describe('required argument types', () => {
+	it('throws an error when passed a non-function callback', async () => {
+		const client = new HttpClient();
+
+		try {
+			// @ts-expect-error
+			await client.get({ url }, 'not_a_callback');
+		} catch (ex) {
+			expect(ex).toBeInstanceOf(Error);
+		}
+	});
+});
+
+describe('request method configurations', () => {
+	it('should pass data', async () => {
+		const client = new HttpClient();
+
+		const response = await client.post({
+			url: 'http://127.0.0.1:3000/people',
+			data: {
+				name: 'Egon Schiele',
+				id: '7'
 			}
 		});
-	});
 
-	describe('request method configurations', () => {
-		it('should pass data', async () => {
-			const client = new HttpClient();
-
-			const response = await client.post({
-				url: 'http://127.0.0.1:3000/people',
-				data: {
-					name: 'Egon Schiele',
-					id: '7'
-				}
-			});
-
-			expect(response.status).toBe(201);
-		});
+		expect(response.status).toBe(201);
 	});
 });

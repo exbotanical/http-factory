@@ -1,33 +1,20 @@
 {
 	"extends": [
-		"@magister_zito/typescript",
+		"@magister_zito",
 		"prettier"
 	],
-	"overrides": [
-    {
-      "files": "**/__tests__/**",
-      "extends": [
-        "plugin:jest/all"
-      ],
-      "plugins": [
-        "jest"
-      ],
-      "env": {
-        "es6": true,
-        "jest/globals": true
-      },
-      "rules": {
-        "jest/require-to-throw-message": "off",
-        "jest/prefer-expect-assertions": "off",
-        "jest/no-hooks": "off",
-        "jest/prefer-called-with": "off"
-      }
-    }
-	],
 	"ignorePatterns": [
-		"node_modules",
 		".build",
-		"coverage",
-		"dist"
+		"rollup.config.js"
+	],
+	"overrides": [
+		{
+			// "extends": ["plugin:@typescript-eslint/all"],
+			"files": ["**/*.ts"],
+			// "parser": "@typescript-eslint/parser",
+			"parserOptions": {
+				"project": ["./tsconfig.json", "./__tests__/tsconfig.json"]
+			}
+		}
 	]
 }

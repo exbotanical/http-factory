@@ -1,5 +1,9 @@
-/* eslint-disable promise/param-names */
+/* eslint-disable @typescript-eslint/no-unsafe-argument,no-await-in-loop */
 import axios from 'axios';
+
+import { logRequest, logResponse } from './logger';
+import { mustBeStr, mustBeFn, mustBeObj } from './util';
+
 import type {
 	IRequestConfig,
 	IContinuation,
@@ -10,9 +14,6 @@ import type {
 	IBaseClientInstance
 } from './types';
 
-import { mustBeStr, mustBeFn, mustBeObj } from './util';
-import { logRequest, logResponse } from './logger';
-
 /**
  * Factory for creating new Http clients.
  *
@@ -20,7 +21,9 @@ import { logRequest, logResponse } from './logger';
  */
 export class HttpClient {
 	client: IBaseClientInstance;
+
 	protected transformRequest;
+
 	protected transformResponse;
 
 	constructor(opts?: IRequestConfig) {
@@ -123,7 +126,10 @@ export class HttpClient {
 	 *
 	 * @public
 	 */
-	get<R = any, D = any>(config?: IRequestConfig<D>, cb?: IContinuation<R>) {
+	async get<R = any, D = any>(
+		config?: IRequestConfig<D>,
+		cb?: IContinuation<R>
+	) {
 		if (cb != null) {
 			mustBeFn(cb);
 		}
@@ -141,7 +147,10 @@ export class HttpClient {
 	 *
 	 * @public
 	 */
-	post<R = any, D = any>(config?: IRequestConfig<D>, cb?: IContinuation<R>) {
+	async post<R = any, D = any>(
+		config?: IRequestConfig<D>,
+		cb?: IContinuation<R>
+	) {
 		if (cb != null) {
 			mustBeFn(cb);
 		}
@@ -159,7 +168,10 @@ export class HttpClient {
 	 *
 	 * @public
 	 */
-	put<R = any, D = any>(config?: IRequestConfig<D>, cb?: IContinuation<R>) {
+	async put<R = any, D = any>(
+		config?: IRequestConfig<D>,
+		cb?: IContinuation<R>
+	) {
 		if (cb != null) {
 			mustBeFn(cb);
 		}
@@ -177,7 +189,10 @@ export class HttpClient {
 	 *
 	 * @public
 	 */
-	delete<R = any, D = any>(config?: IRequestConfig<D>, cb?: IContinuation<R>) {
+	async delete<R = any, D = any>(
+		config?: IRequestConfig<D>,
+		cb?: IContinuation<R>
+	) {
 		if (cb != null) {
 			mustBeFn(cb);
 		}
@@ -206,7 +221,7 @@ export class HttpClient {
 
 		for (const conf of config) {
 			try {
-				const response = await this.get(conf);
+				const response = await this.get<R, D>(conf);
 
 				if (cb) {
 					yield cb(response);
@@ -217,7 +232,9 @@ export class HttpClient {
 				if (cb) {
 					yield cb(ex);
 				} else {
-					yield new Promise((_, reject) => reject(new Error(ex)));
+					yield new Promise((_, reject) => {
+						reject(new Error(ex));
+					});
 				}
 			}
 		}
@@ -238,7 +255,7 @@ export class HttpClient {
 
 		for (const conf of config) {
 			try {
-				const response = await this.post(conf);
+				const response = await this.post<R, D>(conf);
 
 				if (cb) {
 					yield cb(response);
@@ -249,7 +266,9 @@ export class HttpClient {
 				if (cb) {
 					yield cb(ex);
 				} else {
-					yield new Promise((_, reject) => reject(new Error(ex)));
+					yield new Promise((_, reject) => {
+						reject(new Error(ex));
+					});
 				}
 			}
 		}
@@ -270,7 +289,7 @@ export class HttpClient {
 
 		for (const conf of config) {
 			try {
-				const response = await this.put(conf);
+				const response = await this.put<R, D>(conf);
 
 				if (cb) {
 					yield cb(response);
@@ -281,7 +300,9 @@ export class HttpClient {
 				if (cb) {
 					yield cb(ex);
 				} else {
-					yield new Promise((_, reject) => reject(new Error(ex)));
+					yield new Promise((_, reject) => {
+						reject(new Error(ex));
+					});
 				}
 			}
 		}
@@ -302,7 +323,7 @@ export class HttpClient {
 
 		for (const conf of config) {
 			try {
-				const response = await this.delete(conf);
+				const response = await this.delete<R, D>(conf);
 
 				if (cb) {
 					yield cb(response);
@@ -313,7 +334,9 @@ export class HttpClient {
 				if (cb) {
 					yield cb(ex);
 				} else {
-					yield new Promise((_, reject) => reject(new Error(ex)));
+					yield new Promise((_, reject) => {
+						reject(new Error(ex));
+					});
 				}
 			}
 		}

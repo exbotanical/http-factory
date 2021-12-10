@@ -5,5 +5,5 @@
 		"types": ["node", "jest"],
 		"rootDir": ".."
 	},
-	"include": ["."]
+	"include": ["../src", "."]
 }
