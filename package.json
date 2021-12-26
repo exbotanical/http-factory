@@ -37,7 +37,6 @@
     "lint": "eslint --ext .js,.ts,.json --fix .",
     "mock:db": "json-server mock/db.json &",
     "mock:reset": "chmod -R u+x ./scripts && ./scripts/setup_db.sh",
-    "postinstall": "husky install",
     "prerelease": "npm pack && tar -xvzf *.tgz && rimraf package *.tgz",
     "semantic-release": "semantic-release",
     "test": "pnpm mock:reset && pnpm mock:db && jest --bail && pnpm mock:reset",
