@@ -80,7 +80,7 @@
     "eslint-config-prettier": "8.3.0",
     "heuristics": "1.1.0",
     "husky": "7.0.2",
-    "jest": "27.3.1",
+    "jest": "27.4.5",
     "json-server": "0.17.0",
     "lint-staged": "11.1.2",
     "rimraf": "^3.0.2",
